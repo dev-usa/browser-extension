@@ -1,5 +1,4 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const { CheckerPlugin } = require('awesome-typescript-loader');
 const TerserPlugin = require('terser-webpack-plugin');
 const { DefinePlugin, optimize } = require('webpack');
 const GenerateJsonFromJsPlugin = require('generate-json-from-js-webpack-plugin');
@@ -30,10 +29,10 @@ const config = {
   target: 'web',
   devtool: isProd ? 'none' : 'cheap-source-map',
   entry: {
-    background: join(Background, 'index.ts'),
-    popup: join(Popup, 'index.tsx'),
-    content: join(Content, 'index.tsx'),
-    option: join(Option, 'index.tsx'),
+    background: join(Background, 'index.js'),
+    popup: join(Popup, 'index.jsx'),
+    content: join(Content, 'index.jsx'),
+    option: join(Option, 'index.jsx'),
   },
   output: {
     path: join(__dirname, '../', 'dist'),
@@ -41,7 +40,6 @@ const config = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'ts-loader' },
       {
         test: /\.jsx?$/,
         exclude: /(node_modules)/,
@@ -102,7 +100,6 @@ const config = {
     ],
   },
   plugins: [
-    new CheckerPlugin(),
     new DefinePlugin({
       'process.env': JSON.stringify(
         dotenv.config({
@@ -130,7 +127,7 @@ const config = {
     ...prodPlugins,
   ],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.png', '.svg', '.gql'],
+    extensions: ['.js', '.jsx', '.png', '.svg', '.gql'],
     alias: {
       lib: Lib,
       background: Background,
